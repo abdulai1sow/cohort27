@@ -1,9 +1,8 @@
 {
-  "name": "plants-express",
+  "name": "fruits-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
-    "nodemon": "^2.0.20"
+    "express-react-views": "^0.11.0",
+    "morgan": "^1.10.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   }
 }
