@@ -4,6 +4,7 @@ const fruits = require('./models/fruits')
 const vegetables = require('./models/vegetables')
 const vegetablesArray = require('./models/vegetables')
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 //save mongodb passcode
 require('dotenv').config()
 const Fruit = require('./models/FruitModel')
@@ -15,6 +16,8 @@ const port = 5000
 app.use(morgan('dev'))
 //when ever you need get access to forms
 app.use(express.urlencoded({ extended: false }))
+//method over ride
+app.use(methodOverride('_method'))
 //create your own middleware, read data from post requests
 app.use((req, res, next) => {
   console.log('i run for all routes');
@@ -51,8 +54,14 @@ app.get('/fruits', (req, res) => {
 //====create new fruit
 app.post('/fruits', (req, res) => {
   console.log(req.body);
-  const { readyToEat } = req.body
-  readyToEat === 'on' ? true : false  
+  // let { readyToEat } = req.body
+  if (req.body.readyToEat === "on") {
+    req.body.readyToEat = true;
+  } else {
+    req.body.readyToEat = false;
+  }
+  // readyToEat === 'on' ? readyToEat = true : readyToEat = false  
+  console.log(req.body);
   fruits.push(req.body)
   //will send this data to the fruits array
   
@@ -68,6 +77,74 @@ app.post('/fruits', (req, res) => {
   res.redirect('/fruits')
 })
 
+//====render a form
+app.get('/fruits/new', (req, res) => {
+  res.render('fruits/New')
+})
+
+//=======show routes; show single fruit
+app.get('/fruits/:indexArray', (req, res) => {
+  const { indexArray } = req.params
+  //find fruit in db
+  Fruit.findById(indexArray, (err, foundFruit) => {
+    if(err) {
+      console.log(err);
+    }
+    res.render('fruits/Show', {
+      fruit: foundFruit,
+      date: new Date().getFullYear
+    })
+  })
+})
+
+//============DELETE from database
+app.delete('/fruits/:id', (req, res) => {
+  const { id } = req.params
+  //remove will give us back the data
+  //delete will not give us back data
+  Fruit.findByIdAndRemove(id, (err, data) => {
+    console.log(data);
+    if (err) {
+      console.log(err);
+      res.status(403).send('bad request')
+    }
+    res.redirect('/fruits')
+  })
+})
+///====EDIT FILE
+app.get('/fruits/:id/edit', (req, res) => {
+  const {id}=req.params
+  //find the fruit in the db using the id
+  Fruit.findById(id, (err, foundFruit) => {
+    // console.log('right herr', foundFruit);
+    if (err) {
+      console.log(err);
+      res.status(403).send('id not found')
+    }
+    res.render('fruits/Edit', {fruit: foundFruit})
+  })
+  //render the view and pass the data from the fruit
+})
+
+//=========UPDATE THE DATA
+app.put('/fruits/:id', (req, res) => {
+  const {id} = req.params
+  if (req.body.readyToEat === 'on') {
+    req.body.readyToEat = true
+  } else {
+    req.body.readyToEat = false
+  }
+
+  Fruit.findByIdAndUpdate(id, req.body, (err, updatedFruit) => {
+    if (err) {
+      console.log(err);
+      res.status(403).send('cannot update')
+    }
+    res.redirect(`/fruits/${id}`)
+  })
+})
+//======================*********************VEGETABLE*******************==============
+
 //===create new vegetable
 app.post('/vegetables', (req, res) => {
   const { readyToEat } = req.body
@@ -79,33 +156,6 @@ app.post('/vegetables', (req, res) => {
 app.get('/vegetables/new', (req, res) => {
   res.render('vegetables/New')
 })
-
-//====render a form
-app.get('/fruits/new', (req, res) => {
-  res.render('fruits/New')
-})
-
-//show routes; show single fruit
-app.get('/fruits/:indexArray', (req,res) => {
-  const { indexArray } = req.params
-  // res.send(fruits[indexArray])
-  res.render('fruits/Show', {
-    fruit: fruits[indexArray],//this will be avalible inside the jsx file
-    date: new Date().getFullYear()
-  })//this will look at the Show.jsx file
-  
-  //find fruit in db
-  Fruit.findById(id, (err, foundFruit) => {
-    res.render('fruits/Show', {
-      if(err) {
-        console.log(err);
-      },
-      fruit: foundFruit,
-        date: new Date().getFullYear
-    })
-  })
-})
-
 
 ///===vegetables api
 app.get('/vegetables', (req, res) => {

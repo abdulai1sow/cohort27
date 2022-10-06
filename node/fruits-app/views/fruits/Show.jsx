@@ -3,7 +3,8 @@ const React = require('react')
 class Show extends React.Component{
   render() {
     console.log(this.props);
-    const fruit = this.props //recieveing the data from fruit.js
+    const { fruit } = this.props //recieveing the data from fruit.js
+    console.log(fruit);
     const presentDate = this.props.date
     return (
       <div style={{backgroundColor: 'royalblue'}}>
