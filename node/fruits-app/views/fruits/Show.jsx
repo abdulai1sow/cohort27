@@ -23,4 +23,31 @@ class Show extends React.Component{
   }
 }
 
+const styles = {
+  container: {
+    backgroundColor: "royalblue",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  header: {
+    fontSize: "32px",
+    color: "#fff",
+  },
+  ulContainer: {
+    backgroundColor: "#fff",
+    padding: "15px",
+  },
+  createFruitBtn: {
+    backgroundColor: "#fff",
+    padding: "5px",
+    borderRadius: "5px",
+    textDecoration: "none",
+  },
+  item: {
+    padding: "10px",
+    listStyleType: "none",
+  },
+};
+
 module.exports = Show

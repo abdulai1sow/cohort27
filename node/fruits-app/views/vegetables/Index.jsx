@@ -7,7 +7,8 @@ class Index extends React.Component {
     return (
       <div>
         <h1>all vegetables</h1>
-
+        
+        <a href="/vegetables/new">create vegetable</a>
         <ul>
           {vegetables.map((vegetable, idx) => (
             <li key={idx}>
