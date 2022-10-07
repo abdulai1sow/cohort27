@@ -1,17 +1,17 @@
 const React = require('react')
+import Styles from './IndexStyle'
 
 class Index extends React.Component {
   render() {
     const {pokemons} = this.props
-    console.log(`s00000///${pokemons}`);
     return (
-      <div>
+      <div style={Styles.container}>
         <h1>see all the pokemon</h1>
         <ul>
           console.log(pokemons.map((pokemon)))
           {pokemons.map((pokemon, idx) => (
             <li key={idx}>
-              I bring you <a href="{`/pokemons/${idx}`}">{ pokemon.name}</a>
+              I bring you <a style={Styles.a} href="{`/pokemons/${idx}`}">{ pokemon.name}</a>
               {/* <img src="{pokemon.img}" alt="pokemons" /> */}
             </li>
           ))}
