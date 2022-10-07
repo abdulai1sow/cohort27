@@ -6,17 +6,20 @@ class Index extends React.Component {
     const {pokemons} = this.props
     return (
       <div style={Styles.container}>
-        <h1>see all the pokemon</h1>
+        <h1></h1>
         <ul>
           {pokemons.map((pokemon, id) => (
             <li key={id}>
-              I bring you <a style={Styles.a} href={`/pokemons/${id}`}>{ pokemon.name}</a>
-              <img src = {pokemon.img} alt="pokemon" />  
+              I bring you{" "}
+              <a style={Styles.a} href={`/pokemons/${id}`}>
+                {pokemon.name}
+              </a>
+              <img src={pokemon.img} alt="pokemon" />
             </li>
           ))}
         </ul>
       </div>
-    )
+    );
   }
 }
 

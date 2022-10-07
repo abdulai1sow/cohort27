@@ -6,12 +6,17 @@ class Show extends React.Component{
     const {pokemons} = this.props
     return (
       <div>
-        <h1>one pokemon</h1>
+        <h1>Gotta Catch 'Em All</h1>
+        <h2>
+          {pokemons.name}
+          <img src={pokemons.img} alt="poke" />
+        </h2>
 
-        <h3>my name is { pokemons.name}</h3>
-        <h3>I look like { pokemons.img}</h3>
+        <a href="/pokemons">
+          <button> Back</button>
+        </a>
       </div>
-    )
+    );
   }
 }
 
