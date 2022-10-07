@@ -16,10 +16,15 @@ app.engine('jsx', require('express-react-views').createEngine())
 app.get('/', (req, res) => {
   res.send('welcome to the pokemon App!')
 })
-//show all pokemon
+//=======GET show all pokemon======
 app.get('/pokemons', (req, res) => {
   // console.log(`${pokemons}`);
   res.render('Index', {pokemons: pokemons})
+})
+//====GET show ONE pokemon======
+app.get('/pokemon/:id', (req, res) => {
+  const { id } = req.params
+ 
 })
 
 app.listen(port, () => {
