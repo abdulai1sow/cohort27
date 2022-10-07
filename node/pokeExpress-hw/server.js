@@ -22,9 +22,12 @@ app.get('/pokemons', (req, res) => {
   res.render('Index', {pokemons: pokemons})
 })
 //====GET show ONE pokemon======
-app.get('/pokemon/:id', (req, res) => {
-  const { id } = req.params
- 
+app.get('/pokemons/:pokeId', (req, res) => {
+  // console.log(get);
+  const { pokeId } = req.params
+  res.render('Show', {
+   pokemons: pokemons[pokeId]
+ })
 })
 
 app.listen(port, () => {

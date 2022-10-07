@@ -8,11 +8,10 @@ class Index extends React.Component {
       <div style={Styles.container}>
         <h1>see all the pokemon</h1>
         <ul>
-          console.log(pokemons.map((pokemon)))
-          {pokemons.map((pokemon, idx) => (
-            <li key={idx}>
-              I bring you <a style={Styles.a} href="{`/pokemons/${idx}`}">{ pokemon.name}</a>
-              {/* <img src="{pokemon.img}" alt="pokemons" /> */}
+          {pokemons.map((pokemon, id) => (
+            <li key={id}>
+              I bring you <a style={Styles.a} href={`/pokemons/${id}`}>{ pokemon.name}</a>
+              <img src = {pokemon.img} alt="pokemon" />  
             </li>
           ))}
         </ul>
@@ -20,9 +19,6 @@ class Index extends React.Component {
     )
   }
 }
-// const myStyle = {
-//   color: "#ffffff",
-//   backgroundColor: "#000000",
-// };
+
 
 module.exports = Index;
