@@ -8,12 +8,17 @@ const app = express()
 port = 5000
 app.use(morgan('dev'))
 app.use(express.json())
+app.use(express.static('public'))
+
+//app settings
+app.set('view engine', 'jsx')
+app.engine('jsx', require('express-react-views').createEngine())
 
 app.use('/blog',require('./controllers/BlogRouter'))
 app.use('/user', require('./controllers/UserRouter'))
 
 app.use('/', (req, res) => {
-  res.send('hey')
+  res.render('pages/Home')
 })
 
 app.listen(port, () => {

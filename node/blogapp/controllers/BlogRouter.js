@@ -2,6 +2,7 @@ const express = require('express')
 const BlogModel = require('../models/blogSchema')
 
 const router = express.Router()
+
 //===get
 router.get('/', async (req, res) => {
   try {
