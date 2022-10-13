@@ -1,23 +1,17 @@
 import React, { Component } from 'react'
-import Nav from "react-bootstrap/Nav";
-
+import Navbar from '../components/Navbar'
 
 export default class Home extends Component {
   render() {
     return (
       
       <div >
-        <Nav className='container'>
-          <Nav.Item>
-            <Nav.Link href="/home">HOME</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/blog">BLOGS</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="./register/">REGISTER</Nav.Link>
-          </Nav.Item>
-        </Nav>
+        <head>
+          <link rel="stylesheet" href="/CSS/app.css"/>    
+        </head>
+        <Navbar />
+        
+      
 
         <div >
           <h1>

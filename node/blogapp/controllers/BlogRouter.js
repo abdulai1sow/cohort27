@@ -7,16 +7,20 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   try {
     const blogs = await BlogModel.find()
-    res.send(blogs)
+    res.render('blog/Blog', {BlogModel: blogs})
   } catch (err) {
     res.status(500).json(err)
   }
 })
+//====render form
+router.get('/new', (req, res) => {
+  res.render('blog/New')
+})
 ///====get by id
-router.get('/:id', async (req, res) => {
+router.get('/:id/edit', async (req, res) => {
   try {
     const blog = await BlogModel.findById(req.params.id)
-    res.send(blog)
+    res.render('blog/Edit',{blog: blog})
   } catch (err) {
     console.log(err);
     res.status(403).send('cannot get')
@@ -26,7 +30,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const newBlog = await BlogModel.create(req.body)
-    res.send(newBlog)
+    res.redirect('/blog')
   } catch (err){
     console.log(err);
     res.status(403).send('cannot create')
@@ -45,14 +49,15 @@ router.post('/', async (req, res) => {
 //   })
 // })
 
+
 ///==== PUT update by ID
 router.put('/:id', async (req, res) => {
+  console.log(req.body);
   try {
+    const { id } = req.params
     const updatedBlog = await BlogModel.findByIdAndUpdate(req.params.id, req.body,
-      // { 'returnDocument': 'after' } or >
-      {new:true}
-    )
-    res.send(updatedBlog)
+      { 'returnDocument': "after" })
+    res.redirect(`/blog`)
   } catch (err) {
     res.status(403).send('cannot updat')
   }

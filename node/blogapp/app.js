@@ -1,6 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 
 require('dotenv').config()
 
@@ -8,7 +9,12 @@ const app = express()
 port = 5000
 app.use(morgan('dev'))
 app.use(express.json())
+//when ever you need get access to forms
+app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'))
+
+//method over ride
+app.use(methodOverride('_method'))
 
 //app settings
 app.set('view engine', 'jsx')
