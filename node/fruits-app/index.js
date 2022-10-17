@@ -62,9 +62,8 @@ app.post('/fruits', (req, res) => {
   }
   // readyToEat === 'on' ? readyToEat = true : readyToEat = false  
   console.log(req.body);
-  fruits.push(req.body)
   //will send this data to the fruits array
-  
+  fruits.push(req.body)
   //using model to create new data on mongodb
   Fruit.create(req.body, (err, createdFruit) => {
     console.log(req.body);

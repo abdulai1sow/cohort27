@@ -1,17 +1,10 @@
 const express = require('express')
 const UserModel = require('../models/userSchema')
+const bcrypt = require('bcryptjs')
 
 const router = express.Router()
 
-//===get
-// router.get('/user', async (req, res) => {
-//   try {
-//     const users = await Usermodel.find()
-//     res.render('register/Register',{register: registerDb})
-//   } catch (err) {
-//     req.status(500).json(err)
-//   }
-// })
+
 //===get
 router.get('/', async (req, res) => {
   try {
@@ -22,18 +15,13 @@ router.get('/', async (req, res) => {
   }
 })
 
-//===get by id
-router.get('/:id', async (req, res) => {
-  try {
-    const user = await UserModel.findById(req.params.id)
-  } catch (err) {
-    console.log(err);
-    res.status(403).send('cannot get user by id')
-  }
+//render a registeration form
+router.get('/signup', (req,res) => {
+  res.render('user/Signup')
 })
 
 //===post method
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     //check if user exist
     const userAlreadyExist = await UserModel.find({ email: req.body.email });
@@ -43,11 +31,55 @@ router.post('/', async (req, res) => {
       return res.send('User already exist')
     }
     //create new user
+    const SALT = await bcrypt.genSalt(10) //how strong your hash will be
+    req.body.password = await bcrypt.hash(req.body.password, SALT) //reasign the password to the hash password
     const newUser = await UserModel.create(req.body)
-    res.send(newUser)
+    res.redirect('/user/Signin')
   } catch (err) {
     console.log(err);
-    res.status(403).send('cannot create')
+    res.status(403).send('cannot post')
+  }
+})
+//render the signin form
+router.get('/signin', (req, res) => {
+  res.render('user/Signin')
+})
+//sign an user
+router.post('/signin', async (req, res) => {
+  try {
+    //find user by email
+    const user = await UserModel.findOne({ email: req.body.email })
+    if (!user) return res.send('please check your email and password')
+    //checks if password match
+    const decodedpassword = await bcrypt.compare(req.body.password, user.password)
+    if (!decodedpassword) return res.send('please check your email and password')
+    //set the user session
+    //create a new user in the session obj using the user ingo from the db
+    req.session.user = user.user
+    req.session.loggedIn = true
+    //redirect to /blog
+    res.redirect('/blog')
+  } catch (err) {
+  }
+})
+
+//signout user and destroy session
+router.get('/signout', (req, res) => {
+  try {
+    req.session.destroy()
+    res.redirect('/')
+  } catch (err) {
+    console.log(err);
+  }
+})
+
+//===get by id
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id)
+  } catch (err) {
+    console.log(err);
+    res.status(403).send('cannot get user by id')
   }
 })
 

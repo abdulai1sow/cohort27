@@ -7,15 +7,36 @@ const {blog} = this.props
       <div>
         Edit
         <form action={`/blog/${blog._id}?_method=PUT`} method="post">
+          <label htmlFor="title">Title</label>
+          <br />
           <input type="text" name="title" defaultValue={blog.title} />
+          <br />
+          <label htmlFor="body">body</label>
+          <br />
+          <textarea
+            type="text"
+            name="body"
+            id=""
+            cols="50"
+            rows="24"
+            defaultValue={blog.body}
+          ></textarea>
+<br />
+          {/* <input type="text" name="author" defaultValue={blog.author} /> */}
+<br />
+          <label>Sponsored?</label>
+          <input
+            type="checkbox"
+            name="sponsored"
+            id=""
+            value={blog.sponsored ? 'on': null}
+          />
+          <br />
+          <input type="submit" value="update" />
+        </form>
 
-          <input type="text" name="body" defaultValue={blog.body} />
-
-          <input type="text" name="author" defaultValue={blog.author} />
-
-          <input type="checkbox" name="sponsored" id="" />
-
-          <input type="submit" value='update' />
+        <form action={`/blog/${blog._id}?_method=DELETE`} method='post'>
+          <input type="submit" value="Delete" />
         </form>
       </div>
     );

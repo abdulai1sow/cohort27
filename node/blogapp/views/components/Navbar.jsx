@@ -7,7 +7,8 @@ export default class Navbar extends Component {
         <a href="/">HOME</a>
         <a href="/blog">BLOGS</a>
         <a href="/blog/new">CREATE NEW BLOG</a>
-        <a href="/sign">SIGN/UP</a>
+        <a href="/user/signup">SIGN/UP</a>
+        <a href="/user/signout">SIGNOUT</a>
       </nav>
     )
   }
